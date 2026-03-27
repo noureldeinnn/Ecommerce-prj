@@ -1,4 +1,7 @@
+import { getProducts } from "../data/products";
+import ProductCard from "../components/ProductCard";
 export default function Home() {
+    const products = getProducts();
     return <div className="page">
         <div className="home-hero">
             <h1 className="home-title">Welcome to the Marketplace</h1>
@@ -6,9 +9,7 @@ export default function Home() {
         </div>
         <div className="container">
             <h2 className="page-title">Featured Products</h2>
-            <div className="products-grid">
-
-            </div>
+            <ProductCard products={products} key={products.id} />
 
         </div>
 
