@@ -1,10 +1,13 @@
 import { useParams, useNavigate } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { getProductById } from "../data/products"
+import { useCart } from "../context/CartContext"
+
 
 export default function ProductDetails() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { addToCart, getQuantity } = useCart();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
@@ -28,7 +31,9 @@ export default function ProductDetails() {
                         <h1 className="product-detail-title">{product.name}</h1>
                         <p className="product-detail-price">${product.price}</p>
                         <p className="product-detail-description">{product.description}</p>
-                        <button className="btn btn-primary">Add to Cart</button>
+                        <button className="btn btn-primary" onClick={() => addToCart(product.id)}>
+                            Add to Cart {getQuantity(product.id) > 0 && `(${getQuantity(product.id)})`}
+                        </button>
                     </div>
                 </div>
             </div>
