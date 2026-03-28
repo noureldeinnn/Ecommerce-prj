@@ -9,7 +9,7 @@ export default function Home() {
         </div>
         <div className="container">
             <h2 className="page-title">Featured Products</h2>
-            <ProductCard products={products} key={products.id} />
+            <ProductCard products={products} />
 
         </div>
 

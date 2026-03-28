@@ -8,7 +8,6 @@ export default function CartProvider({ children }) {
     const addToCart = (productId) => {
         const existing = cart.find((item) => item.id === productId);
         if (existing) {
-            const cartQuantity = existing.quantity;
             const updatedCartItem = cart.map((item) => item.id === productId ? { id: productId, quantity: item.quantity + 1 } : item)
             setCart(updatedCartItem);
         } else {
@@ -52,6 +51,7 @@ export default function CartProvider({ children }) {
     </CartContext.Provider>
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useCart() {
     return useContext(CartContext);
 }
