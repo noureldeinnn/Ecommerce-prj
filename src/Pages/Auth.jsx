@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 
@@ -9,7 +8,7 @@ export default function Auth() {
     const [mode, setMode] = useState('signup')
     const [error, setError] = useState(null)
     const { register, handleSubmit, formState: { errors } } = useForm()
-    const { signUp, user, logout, signIn } = useContext(AuthContext)
+    const { signUp, signIn } = useContext(AuthContext)
 
     const onSubmit = (data) => {
         setError(null)
@@ -36,8 +35,6 @@ export default function Auth() {
         <div className="container">
             <div className="auth-container">
                 <div className="auth-header">
-                    {user && <p>Welcome, {user.email}</p>}
-                    <button onClick={logout}>Logout</button>
                     <h1 className="page-title">{mode === 'signup' ? 'Sign Up' : 'Sign In'}</h1>
                     <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
                         {error && <p className="error-message">{error}</p>}
