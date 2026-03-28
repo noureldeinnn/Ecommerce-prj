@@ -1,21 +1,46 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useContext } from 'react'
+import { AuthContext } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 export default function Auth() {
+    const navigate = useNavigate()
     const [mode, setMode] = useState('signup')
+    const [error, setError] = useState(null)
     const { register, handleSubmit, formState: { errors } } = useForm()
+    const { signUp, user, logout, signIn } = useContext(AuthContext)
 
     const onSubmit = (data) => {
-        console.log("Form data submitted:", data)
-        alert(`Successfully ${mode === 'signup' ? 'signed up' : 'signed in'}!`)
+        setError(null)
+        if (mode === 'signup') {
+            const result = signUp(data.email, data.password)
+            if (!result.success) {
+                setError(result.message)
+            } else {
+                navigate('/')
+            }
+        } else {
+            const result = signIn(data.email, data.password)
+            if (!result.success) {
+                setError(result.message)
+            }
+            else {
+                navigate('/')
+            }
+        }
+
     }
 
     return <div className="page">
         <div className="container">
             <div className="auth-container">
                 <div className="auth-header">
+                    {user && <p>Welcome, {user.email}</p>}
+                    <button onClick={logout}>Logout</button>
                     <h1 className="page-title">{mode === 'signup' ? 'Sign Up' : 'Sign In'}</h1>
                     <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>
+                        {error && <p className="error-message">{error}</p>}
                         <div className="form-group">
                             <label className="form-label" htmlFor="email">Email</label>
                             <input
