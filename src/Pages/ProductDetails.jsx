@@ -17,7 +17,6 @@ export default function ProductDetails() {
             navigate("/");
             return;
         }
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setProduct(foundProduct);
     }, [id, navigate])
     if (!product) return null; // Or return a loading spinner <div>Loading...</div>
